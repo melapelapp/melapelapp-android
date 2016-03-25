@@ -30,6 +30,7 @@
         </activity>
         <!--<activity android:name="com.melapelapp.LoginActivity" android:theme="@style/AppTheme.Dark" />-->
         <activity android:name="com.melapelapp.SignupActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name="com.melapelapp.ActivityPersonList" android:theme="@style/AppTheme.Dark" />
     </application>
 
 </manifest>

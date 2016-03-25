@@ -21,14 +21,14 @@ import java.io.IOException;
 public class ServerConnector extends AsyncTask<String, Integer, String> {
 
 	/** Activity to access to UI **/
-	private final MainActivity activity;
+	private final ActivityPersonList activity;
 	/** Progress dialog to display the progress **/
 	private ProgressDialog progDialog;
 	/** ArrayList with the Data object **/
 	//private ArrayList<Person> records = new ArrayList<Person>();
     private String json;
 
-	public ServerConnector(MainActivity activity, String json) {
+	public ServerConnector(ActivityPersonList activity, String json) {
 		this.activity = activity;
 		this.json = json;
 	}

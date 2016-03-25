@@ -83,9 +83,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         onLoginSuccess();
                         // onLoginFailed();
                         progressDialog.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ActivityPersonList.class);
                         startActivity(intent);
-
 
 
                     }
@@ -157,12 +156,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 login();
                 break;
             case R.id.txt_signup:
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
+                signUp();
                 break;
 
         }
 
+    }
+
+    private void signUp()
+    {
+        Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+        startActivityForResult(intent, REQUEST_SIGNUP);
     }
 
 }

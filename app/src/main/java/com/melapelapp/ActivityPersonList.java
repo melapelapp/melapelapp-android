@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class ActivityPersonList extends AppCompatActivity implements View.OnClickListener {
         String json;
         ArrayList<Person> persons;
         ArrayList<com.melapelapp.domain.Error> errors;
@@ -77,12 +77,12 @@ private void initializePinterestView()
                 @Override
                 public void onMenuItemClick(int childAt) {
                         String tips = (String) pinterestView.getChildAt(childAt).getTag();
-                        Toast.makeText(MainActivity.this, tips + " clicked!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityPersonList.this, tips + " clicked!", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onPreViewClick() {
-                        Toast.makeText(MainActivity.this, "button clicked!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityPersonList.this, "button clicked!", Toast.LENGTH_SHORT).show();
                 }
         });
 
@@ -97,6 +97,8 @@ private void initializePinterestView()
 
         CircleImageView imageView = (CircleImageView) findViewById(R.id.image);
         imageView.setFillColor(getResources().getColor(R.color.accent));
+
+    runQuery("112358","3");
 }
 
 public void connect(String fullUrl)
@@ -235,8 +237,18 @@ private void runQuery(String storeId, String limit)
          //   String fullUrl = domainUrl;
         //String response = "";
 
+        if(true)//mock connection
+        {
+            persons = WebServiceMock.getPersons();
+            adapter = new PersonArrayAdapter(persons, pinterestView);
+            listView.setAdapter(adapter);
 
-        connect(url);
+        }
+         else
+        {
+
+            connect(url);
+        }
         }
 
 

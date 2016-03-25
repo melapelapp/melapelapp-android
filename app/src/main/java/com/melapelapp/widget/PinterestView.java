@@ -1,4 +1,4 @@
-package com.melapelapp;
+package com.melapelapp.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -23,6 +23,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import com.melapelapp.R;
 
 /**
  * Created by Bruce Too
@@ -507,7 +508,7 @@ public class PinterestView extends ViewGroup {
         this.mPinMenuClickListener = pinMenuClickListener;
     }
 
-    interface PinMenuClickListener{
+    public interface PinMenuClickListener {
         /**
          *  PinterestView item click
          * @param childAt position in PinterestView

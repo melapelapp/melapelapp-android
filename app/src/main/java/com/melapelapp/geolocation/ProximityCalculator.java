@@ -1,4 +1,4 @@
-package com.melapelapp;
+package com.melapelapp.geolocation;
 
 /**
  * Created by gesban on 2/24/2016.

@@ -14,6 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.melapelapp.domain.*;
+import com.melapelapp.domain.Error;
+import com.melapelapp.widget.CircleImageView;
+import com.melapelapp.widget.PersonArrayAdapter;
+import com.melapelapp.widget.PinterestView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +28,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
         String json;
         ArrayList<Person> persons;
-        ArrayList<Error> errors;
+        ArrayList<com.melapelapp.domain.Error> errors;
         EditText txtQuery;
         Button btnRun;
         Button btnPush;

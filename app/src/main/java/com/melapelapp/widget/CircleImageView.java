@@ -1,4 +1,4 @@
-package com.melapelapp;
+package com.melapelapp.widget;
 
 /**
  * Created by Bruce Too
@@ -26,6 +26,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import com.melapelapp.R;
 
 public class CircleImageView extends ImageView {
 

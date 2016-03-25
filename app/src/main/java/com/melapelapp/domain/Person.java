@@ -1,4 +1,4 @@
-package com.melapelapp;
+package com.melapelapp.domain;
 
 /**
  * Created by gesban on 10/7/2015.

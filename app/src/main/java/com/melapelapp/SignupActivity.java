@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.melapelapp.geolocation.GeoLocationTracker;
 
 //import com.melapelapp.Store;
 //import com.melapelapp.StoreSignup;
@@ -26,10 +27,10 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-//stackoverflow driven development muahahaha
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher{
+public class SignupActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
     private static final String TAG = "SignupActivity";
+
     ImageView imgLogo;
     TextView txtGeolocation;
     TextView txtLogin;
@@ -44,20 +45,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     EditText txtPassword;
     Button btnSignUp;
 
-
     Context context;
     GeoLocationTracker geoLocationTracker;
     UserDataProvider userDataProvider;
     ProgressDialog progressDialog;
 
-    private void initializeViews()
-    {
-
-        txtStoreName =  (EditText) findViewById(R.id.txt_store_name);
-        txtUserName =  (EditText)  findViewById(R.id.txt_user_name);
-        txtPhoneNumber =  (EditText)  findViewById(R.id.txt_phone_number);
-        txtPassword =  (EditText)  findViewById(R.id.txt_password);
-        txtLogin =  (TextView) findViewById(R.id.txt_login_link);
+    private void  initializeViews() {
+        txtStoreName = (EditText) findViewById(R.id.txt_store_name);
+        txtUserName = (EditText) findViewById(R.id.txt_user_name);
+        txtPhoneNumber = (EditText) findViewById(R.id.txt_phone_number);
+        txtPassword = (EditText) findViewById(R.id.txt_password);
+        txtLogin = (TextView) findViewById(R.id.txt_login_link);
         txtAddress1 = (TextView) findViewById(R.id.txt_address1);
         txtAddress2 = (TextView) findViewById(R.id.txt_address2);
         txtCityName = (TextView) findViewById(R.id.txt_city_name);
@@ -81,10 +79,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,10 +91,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         context = getApplicationContext();
         //GeoLocationTracker geoLocationTracker = GeoLocationTracker.getInstance(context);
 
-        geoLocationTracker = new GeoLocationTracker(context,txtGeolocation);
+        geoLocationTracker = new GeoLocationTracker(context, txtGeolocation);
         userDataProvider = new UserDataProvider(context);
-
-
     }
 
     public void signup() {
@@ -129,7 +121,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         address.setPostalCode(txtAddress1.getText().toString());
 
 
-
 //        new android.os.Handler().postDelayed(
 //                new Runnable() {
 //                    public void run() {
@@ -140,7 +131,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 //                        progressDialog.dismiss();
 //                    }
 //                }, 3000);
-  }
+    }
 
     public void onSignupSuccess() {
         btnSignUp.setEnabled(true);
@@ -154,19 +145,19 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         btnSignUp.setEnabled(true);
     }
 
-    public boolean validate() {
+    private boolean validate() {
         boolean valid = true;
 
-        String storeName   = txtStoreName.getText().toString();
-        String userName    = txtUserName.getText().toString();
-        String password    = txtPassword.getText().toString();
-        String address1    = txtAddress1.getText().toString();
-        String address2    = txtAddress2.getText().toString();
-        String cityName    = txtCityName.getText().toString();
-        String stateName   = txtStateName.getText().toString();
-        String postalCode  = txtPostalCode.getText().toString();
+        String storeName = txtStoreName.getText().toString();
+        String userName = txtUserName.getText().toString();
+        String password = txtPassword.getText().toString();
+        String address1 = txtAddress1.getText().toString();
+        String address2 = txtAddress2.getText().toString();
+        String cityName = txtCityName.getText().toString();
+        String stateName = txtStateName.getText().toString();
+        String postalCode = txtPostalCode.getText().toString();
         String phoneNumber = txtPassword.getText().toString();
-        
+
 
         if (storeName.isEmpty() || storeName.length() < 3) {
             txtStoreName.setError("at least 3 characters");
@@ -230,7 +221,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
-        switch(v.getId()) {
+        switch (v.getId()) {
 
             case R.id.btn_signup:
                 signup();
@@ -262,8 +253,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void setUserAccount()
-    {
+    private void setUserAccount() {
 
         String userName = userDataProvider.getEmail();
         String phoneNumber = userDataProvider.getPhoneNumber();
@@ -272,11 +262,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         txtPhoneNumber.setText(phoneNumber);
     }
 
-    private void setLocation()
-    {
-       Location location = geoLocationTracker.getLocation();
+    private void setLocation() {
+        Location location = geoLocationTracker.getLocation();
 
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());;
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        ;
         List<Address> addresses = null;
 
         try {
@@ -295,9 +285,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             txtPostalCode.setText(address.getPostalCode());
         }
     }
-
-
-
 
 
 }

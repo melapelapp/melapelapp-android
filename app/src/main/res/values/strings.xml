@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MelapelApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="store_name">Store name</string>
+    <string name="contact_email">Contact email</string>
+    <string name="contact_password">Password</string>
+
+    <string name="address1">Address Line 1</string>
+    <string name="address2">Address Line 2</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="postal_code">Zip code</string>
+    <string name="phone">Phone</string>
+
+
+
+    between 4 and 10 alphanumeric characters
+</resources>

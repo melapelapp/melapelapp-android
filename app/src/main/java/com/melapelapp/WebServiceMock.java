@@ -1,5 +1,7 @@
 package com.melapelapp;
 
+import com.melapelapp.domain.Person;
+
 import java.util.ArrayList;
 
 /**

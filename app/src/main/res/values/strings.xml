@@ -12,7 +12,9 @@
     <string name="postal_code">Zip code</string>
     <string name="phone">Phone</string>
 
+    <string name="loading_userdata">Retrieving data...</string>
+    <string name="creating_account">Creating Account...</string>
+    <string name="signup_failure">Signup failed</string>
 
-
-    between 4 and 10 alphanumeric characters
+    <string name="no_address_found">Could not get address from location</string>
 </resources>

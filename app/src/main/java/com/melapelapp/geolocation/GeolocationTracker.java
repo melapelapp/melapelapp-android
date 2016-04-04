@@ -110,7 +110,7 @@ public class GeolocationTracker {
         }
     }
 
-    protected void doWithLocation() {
+    protected void doWithLocation(Location location) {
         listener.doWithTracking(location);
     }
 

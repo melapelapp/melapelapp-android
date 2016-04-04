@@ -38,8 +38,7 @@ public class LocationListenerStrategy implements LocationListener {
         updates++;
         if (tracker.isBetterLocation(location, tracker.getLocation())) {
             tracker.setLocation(location);
-            tracker.doWithLocation();
-            //listener.doWithTracking(getTrackingOjbect(location));
+            tracker.doWithLocation(location);
         }
 
         if (updates >= maxUpdates) {

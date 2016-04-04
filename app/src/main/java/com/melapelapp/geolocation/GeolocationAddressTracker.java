@@ -7,6 +7,7 @@ package com.melapelapp.geolocation;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -41,7 +42,8 @@ public class GeolocationAddressTracker extends GeolocationTracker {
         return true;
     }
 
-    protected void doWithLocation() {
+    @Override
+    protected void doWithLocation(Location location) {
         final Intent intent = new Intent(context, AddressFetcherService.class);
         intent.putExtra(RECEIVER, new ResultReceiver(new Handler()) {
             @Override

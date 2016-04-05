@@ -6,6 +6,7 @@ package com.melapelapp.geolocation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,19 +14,23 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import com.melapelapp.commons.android.content.ServiceContextHelper;
-import com.melapelapp.domain.AddressParcel;
 
 import static com.melapelapp.geolocation.AddressFetcherService.Constants.*;
 
 public class GeolocationAddressTracker extends GeolocationTracker {
     private static final String TAG = "GeolocationAddressTracker";
 
-    public GeolocationAddressTracker(Context context, TrackingListener listener) {
-        super(context, listener);
+    public GeolocationAddressTracker(Context context, TrackingListener<Address> listener) {
+        this.listener = listener;
+        this.context = context;
+
+        this.locationPolicy = new LocationListenerStrategy(listener, this);
     }
 
-    public GeolocationAddressTracker(Context context, TrackingListener listener, Settings settings) {
-        super(context, listener, settings);
+    public GeolocationAddressTracker(Context context, TrackingListener<Address> listener, Settings settings) {
+        this(context, listener);
+
+        this.locationPolicy = new LocationListenerStrategy(listener, this, settings.maxUpdates);
     }
 
     protected boolean shouldInit(Context context) {
@@ -49,7 +54,7 @@ public class GeolocationAddressTracker extends GeolocationTracker {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 if (resultCode == SUCCESS_RESULT) {
-                    listener.doWithTracking( ((AddressParcel) resultData.getParcelable(RESULT_DATA_KEY)).getAddress() );
+                    listener.doWithTracking(resultData.getParcelable(RESULT_DATA_KEY));
                 }
             }
         });

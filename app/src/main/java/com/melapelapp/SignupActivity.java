@@ -55,17 +55,21 @@ public class SignupActivity extends AppCompatActivity {
 
         signUpService = new UserServiceStub();
 
-        geoLocationTracker = new GeolocationAddressTracker(getApplicationContext(), new TrackingListener<Address>() {
-            @Override
-            public void doWithTracking(Address location) {
-                displayAddress(location);
-            }
+        geoLocationTracker = new GeolocationAddressTracker(
+                getApplicationContext(),
+                new TrackingListener<Address>() {
+                    @Override
+                    public void doWithTracking(Address address) {
+                        displayAddress(address);
+                    }
 
-            @Override
-            public void onStop() {
-                progressDialog.dismiss();
-            }
-        }, LocationSettingsBuilder.newInstance().withMinTime(1000 * 2).withMinDistance(1).withMaxUpdates(3).build());
+                    @Override
+                    public void onStop() {
+                        progressDialog.dismiss();
+                    }
+                },
+                LocationSettingsBuilder.newInstance().withMinTime(1000 * 2).withMinDistance(1).withMaxUpdates(3).build()
+        );
 
         geoLocationTracker.start();
 

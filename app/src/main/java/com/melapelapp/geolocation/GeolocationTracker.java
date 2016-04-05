@@ -35,17 +35,20 @@ public class GeolocationTracker {
     private boolean isGPSEnabled = false;
     private boolean isNetworkEnabled = false;
 
-    public GeolocationTracker(Context context, TrackingListener listener) {
-        this.listener = listener;
-        this.context = context;
+    protected GeolocationTracker() {
         this.minTime = DEFAULT_MIN_TIME_BW_UPDATES;
         this.minDistance = DEFAULT_MIN_DISTANCE_CHANGE_FOR_UPDATES;
+    }
+
+    public GeolocationTracker(Context context, TrackingListener<Location> listener) {
+        this(context, listener, new Settings());
 
         locationPolicy = new LocationListenerStrategy(listener, this);
     }
 
-    public GeolocationTracker(Context context, TrackingListener listener, Settings settings) {
-        this(context, listener);
+    public GeolocationTracker(Context context, TrackingListener<Location> listener, Settings settings) {
+        this.listener = listener;
+        this.context = context;
         this.minTime = settings.minTime.orElse(DEFAULT_MIN_TIME_BW_UPDATES);
         this.minDistance = settings.minDistance.orElse(DEFAULT_MIN_DISTANCE_CHANGE_FOR_UPDATES);
 

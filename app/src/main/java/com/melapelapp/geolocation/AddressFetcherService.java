@@ -9,14 +9,12 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
 import com.melapelapp.R;
-import com.melapelapp.domain.AddressParcel;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import static com.melapelapp.geolocation.AddressFetcherService.Constants.*;
-
 
 /**
  * Created by mcamacho on 4/3/16.
@@ -59,10 +57,9 @@ public class AddressFetcherService extends IntentService {
             resultReceiver.send(FAILURE_RESULT, bundle);
         } else {
             Address address = addresses.get(0);
-            AddressParcel parcel = new AddressParcel(address);
 
             Log.i(TAG, "Address found");
-            bundle.putParcelable(RESULT_DATA_KEY, parcel);
+            bundle.putParcelable(RESULT_DATA_KEY, address);
             resultReceiver.send(SUCCESS_RESULT, bundle);
         }
     }

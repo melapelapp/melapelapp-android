@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
+import com.melapelapp.commons.SimpleCountDownTimer;
 import com.melapelapp.commons.validation.Validator;
 import com.melapelapp.domain.SignUpObject;
 import com.melapelapp.geolocation.GeolocationAddressTracker;
@@ -75,10 +76,7 @@ public class SignupActivity extends AppCompatActivity {
 
         if (geoLocationTracker.isEnabled()) {
             displayDialogMessage(R.string.loading_userdata);
-            new CountDownTimer(8000, 8000) {
-                @Override
-                public void onTick(long l) { }
-
+            new SimpleCountDownTimer(8000) {
                 @Override
                 public void onFinish() { progressDialog.dismiss(); }
             }.start();

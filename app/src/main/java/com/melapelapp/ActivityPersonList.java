@@ -34,7 +34,7 @@ public class ActivityPersonList extends AppCompatActivity implements View.OnClic
         Button btnPush;
         TextView lblResult;
         RecyclerView listView;
-        private RecyclerView.LayoutManager mLayoutManager;
+        private RecyclerView.LayoutManager mLayoutManager; //hola como est
         PersonArrayAdapter adapter;
         PinterestView pinterestView;
         private ProgressDialog progDialog;

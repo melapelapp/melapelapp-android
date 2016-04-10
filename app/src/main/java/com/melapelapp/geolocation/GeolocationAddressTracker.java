@@ -6,7 +6,6 @@ package com.melapelapp.geolocation;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
 import com.melapelapp.commons.android.content.ServiceContextHelper;
+import com.melapelapp.domain.Address;
 
 import static com.melapelapp.geolocation.AddressFetcherService.Constants.*;
 
@@ -54,7 +54,14 @@ public class GeolocationAddressTracker extends GeolocationTracker {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 if (resultCode == SUCCESS_RESULT) {
-                    listener.doWithTracking(resultData.getParcelable(RESULT_DATA_KEY));
+                    android.location.Address addressParcel = resultData.getParcelable(RESULT_DATA_KEY);
+                    Address address =new Address();
+                    address.setAddressLine0(addressParcel.getAddressLine(0));
+                    address.setLocality(addressParcel.getLocality());
+                    address.setAdminArea(addressParcel.getAdminArea());
+                    address.setPostalCode(addressParcel.getPostalCode());
+
+                    listener.doWithTracking(address);
                 }
             }
         });

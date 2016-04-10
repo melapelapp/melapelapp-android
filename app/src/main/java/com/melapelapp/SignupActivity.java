@@ -1,9 +1,7 @@
 package com.melapelapp;
 
 import android.app.ProgressDialog;
-import android.location.Address;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,15 +9,14 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import com.melapelapp.commons.SimpleCountDownTimer;
 import com.melapelapp.commons.validation.Validator;
+import com.melapelapp.domain.Address;
 import com.melapelapp.domain.SignUpObject;
 import com.melapelapp.geolocation.GeolocationAddressTracker;
 import com.melapelapp.geolocation.GeolocationTracker;
 import com.melapelapp.geolocation.LocationSettingsBuilder;
 import com.melapelapp.geolocation.TrackingListener;
-import com.melapelapp.service.UserService;
-import com.melapelapp.service.UserServiceStub;
-
-import java.util.Locale;
+import com.melapelapp.service.StoreService;
+import com.melapelapp.service.StoreServiceFactory;
 
 import static com.melapelapp.commons.validation.Validator.ValidationTypes.*;
 
@@ -27,7 +24,6 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     ImageView imgLogo;
-    TextView txtGeolocation;
     TextView txtLogin;
     TextView txtAddress1;
     TextView txtAddress2;
@@ -43,7 +39,7 @@ public class SignupActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     GeolocationTracker geoLocationTracker;
-    UserService signUpService;
+    StoreService signUpService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +50,7 @@ public class SignupActivity extends AppCompatActivity {
         setButtonHandlers();
         displayUserAccountData();
 
-        signUpService = new UserServiceStub();
+        signUpService = StoreServiceFactory.create();
 
         geoLocationTracker = new GeolocationAddressTracker(
                 getApplicationContext(),
@@ -95,7 +91,6 @@ public class SignupActivity extends AppCompatActivity {
         txtCityName = (TextView) findViewById(R.id.txt_city_name);
         txtStateName = (TextView) findViewById(R.id.txt_state_name);
         txtPostalCode = (TextView) findViewById(R.id.input_postal_code);
-        txtGeolocation = (TextView) findViewById(R.id.txt_geolocation);
 
         btnSignUp = (Button) findViewById(R.id.btn_signup);
         imgLogo = (ImageView) findViewById(R.id.img_logo);
@@ -118,8 +113,8 @@ public class SignupActivity extends AppCompatActivity {
         btnSignUp.setEnabled(false);
         displayDialogMessage(R.string.creating_account);
 
-        Address address = new Address(Locale.getDefault());
-        address.setAddressLine(0, txtAddress1.getText().toString());
+        Address address = new Address();
+        address.setAddressLine0(txtAddress1.getText().toString());
         address.setLocality(txtAddress1.getText().toString());
         address.setAdminArea(txtAddress1.getText().toString());
         address.setPostalCode(txtAddress1.getText().toString());
@@ -135,12 +130,12 @@ public class SignupActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
                         try {
-                            signUpService.signup(signUpObj);
+                            signUpService.signupStore(signUpObj);
                             setResult(RESULT_OK, null);
                             Toast.makeText(getBaseContext(), "success!", Toast.LENGTH_LONG).show();
                             btnSignUp.setEnabled(true);
                         } catch(Exception e) {
-                            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                             btnSignUp.setEnabled(true);
                         } finally {
                             progressDialog.dismiss();
@@ -179,7 +174,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private void displayAddress(Address address) {
         if (address != null) {
-            txtAddress1.setText(address.getAddressLine(0));
+            txtAddress1.setText(address.getAddressLine0());
             txtCityName.setText(address.getLocality());
             txtStateName.setText(address.getAdminArea());
             txtPostalCode.setText(address.getPostalCode());

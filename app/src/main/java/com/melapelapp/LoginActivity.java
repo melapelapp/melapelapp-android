@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
+import com.melapelapp.commons.validation.Validator;
+import com.melapelapp.domain.User;
+import com.melapelapp.service.StoreService;
+import com.melapelapp.service.StoreServiceFactory;
+
+import static com.melapelapp.commons.validation.Validator.ValidationTypes.EMAIL_ADDRESS;
+import static com.melapelapp.commons.validation.Validator.ValidationTypes.PASSWORD;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -27,10 +30,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     ImageView imgLogo;
 
+    StoreService storeService;
 
-    private void initializeViews()
-    {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        //TODO: SharedPreferences  add this later
 
+        initializeViews();
+
+        imgLogo = (ImageView) findViewById(R.id.img_logo);
+        imgLogo.setImageResource(R.drawable.melapel_app_logo);
+
+        storeService = StoreServiceFactory.create();
+    }
+
+    private void initializeViews() {
         txtUserName =  (EditText) findViewById(R.id.txt_user);
         txtPassword =  (EditText)  findViewById(R.id.txt_password);
 
@@ -43,54 +59,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txtSignUp.setOnClickListener(this);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        //TODO: SharedPreferences  add this later
-
-        initializeViews();
-
-        imgLogo = (ImageView) findViewById(R.id.img_logo);
-        imgLogo.setImageResource(R.drawable.melapel_app_logo);
-    }
-
     public void login() {
         Log.d(TAG, "Login");
 
-        if (!validate()) {
+        boolean valid = Validator.getInstance().add(txtUserName, EMAIL_ADDRESS).add(txtPassword, PASSWORD).validate();
+
+        if (!valid) {
             onLoginFailed();
             return;
         }
 
         btnLogin.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
-
-        String email = txtUserName.getText().toString();
-        String password = txtPassword.getText().toString();
-
-        // TODO: Implement your own authentication logic here.
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                        Intent intent = new Intent(getApplicationContext(), ActivityPersonList.class);
-                        startActivity(intent);
-
-
+                        User user = storeService.login(txtUserName.getText().toString(), txtPassword.getText().toString());
+                        if (user != null) {
+                            onLoginSuccess();
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(getApplicationContext(), PersonListActivity.class);
+                            startActivity(intent);
+                        } else {
+                            progressDialog.dismiss();
+                        }
                     }
                 }, 3000);
-
-
     }
 
 
@@ -121,30 +121,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
        btnLogin.setEnabled(true);
-    }
-
-    public boolean validate() {
-        boolean valid = true;
-
-        String userName    = txtUserName.getText().toString();
-        String password    = txtPassword.getText().toString();
-
-
-        if (userName.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(userName).matches()) {
-            txtUserName.setError("enter a valid email address");
-            valid = false;
-        } else {
-            txtUserName.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            txtPassword.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            txtPassword.setError(null);
-        }
-
-        return valid;
     }
 
     @Override

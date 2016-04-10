@@ -12,14 +12,14 @@ import com.melapelapp.R;
 import com.melapelapp.domain.Person;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //RecyclerView
 
 //ListView public class MySimpleArrayAdapter extends ArrayAdapter<String> {
 public class PersonArrayAdapter extends RecyclerView.Adapter<PersonArrayAdapter.ViewHolder> {
     PinterestView pinterestView;
-    private ArrayList<Person> mDataset;
-
+    private List<Person> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -71,7 +71,7 @@ public class PersonArrayAdapter extends RecyclerView.Adapter<PersonArrayAdapter.
 
 
 
-    public PersonArrayAdapter(ArrayList<Person> myDataset, PinterestView pinterestView) {
+    public PersonArrayAdapter(List<Person> myDataset, PinterestView pinterestView) {
         mDataset = myDataset;
         this.pinterestView=pinterestView;
     }

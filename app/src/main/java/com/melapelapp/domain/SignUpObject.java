@@ -1,7 +1,5 @@
 package com.melapelapp.domain;
 
-import android.location.Address;
-
 /**
  * Created by mcamacho on 4/2/16.
  */
@@ -16,5 +14,21 @@ public class SignUpObject {
         this.userName = userName;
         this.password = password;
         this.address = address;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }

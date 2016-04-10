@@ -69,6 +69,14 @@ public class Validator {
                         textView.setError(null);
                     }
                     break;
+                case PASSWORD:
+                    if (text.isEmpty() || text.length() < 4 || text.length() > 10) {
+                        textView.setError("between 4 and 10 alphanumeric characters");
+                        valid = false;
+                    } else {
+                        textView.setError(null);
+                    }
+                    break;
                 case PHONE:
                     if (text.isEmpty() || !PHONE.matcher(text).matches()) {
                         textView.setError("enter a valid phone number");
@@ -124,9 +132,10 @@ public class Validator {
     }
 
     public static enum ValidationTypes {
+        EMAIL_ADDRESS,
+        PASSWORD,
+        PHONE,
         TEXT_MIN_LENGTH,
         TEXT_MIN_MAX_LENGTH,
-        EMAIL_ADDRESS,
-        PHONE
     }
 }

@@ -48,7 +48,7 @@ public class ActivitySplash extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(ActivitySplash.this, ActivityPersonList.class);
+                Intent i = new Intent(ActivitySplash.this, PersonListActivity.class);
                 startActivity(i);
  
                 // close this activity

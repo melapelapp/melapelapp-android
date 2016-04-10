@@ -155,15 +155,5 @@
             android:gravity="center"
             android:textSize="16dip"/>
 
-
-        <TextView android:id="@+id/txt_geolocation"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text=""
-            android:gravity="center"
-            android:textSize="16dip"
-            android:visibility="invisible"/>
-
     </LinearLayout>
 </ScrollView>
